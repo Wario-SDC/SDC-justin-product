@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Wario-SDC/SDC-justin-product#readme",
   "dependencies": {
-    "axios": "^0.26.0"
+    "axios": "^0.26.0",
+    "mongoose": "^6.2.4",
+    "postgres": "^1.0.2"
   }
 }
