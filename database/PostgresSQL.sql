@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS product_meta(
   features VARCHAR(250)
 );
 
-CREATE TABLE IS NOT EXISTS product_features (
+CREATE TABLE IF NOT EXISTS product_features (
   id SERIAL PRIMARY KEY,
   FOREIGN KEY (id)
     REFERENCES product_meta (id),
@@ -26,7 +26,7 @@ CREATE TABLE IS NOT EXISTS product_features (
   value VARCHAR(250)
 );
 
-CREATE TABLE IS NOT EXISTS product_styles (
+CREATE TABLE IF NOT EXISTS product_styles (
   style_id SERIAL PRIMARY KEY,
   id SERIAL,
   FOREIGN KEY (id)
@@ -35,11 +35,11 @@ CREATE TABLE IS NOT EXISTS product_styles (
   original_price INT,
   sale_price INT,
   default_price BOOLEAN,
-  photos VARCHAR(250);
+  photos VARCHAR(250)
 );
 
 CREATE TABLE IF NOT EXISTS skus (
-  sku_id SERIAL PRIMARY,
+  sku_id SERIAL PRIMARY KEY,
   style_id SERIAL UNIQUE,
   FOREIGN KEY (Style_id)
     REFERENCES product_styles (style_id)
