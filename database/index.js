@@ -1,13 +1,14 @@
-const { Pool } = require('pg')
+// const { Pool } = require('pg')
 
-const pool = new Pool({
-  host: 'localhost',
-  user: 'justingreer',
-  database: 'product_info',
-  // max: 20
-  // idleTimeoutMillis: 30000
-  // connectionTimeoutMillis: 2000
-})
+// const pool = new Pool({
+//   host: 'localhost',
+//   user: 'justingreer',
+//   database: 'product_info',
+//   port: 5432
+//   // max: 20
+//   // idleTimeoutMillis: 30000
+//   // connectionTimeoutMillis: 2000
+// })
 
 // pool.query('SELECT * FROM products LIMIT 2', (err, result) => {
 //   if (err) {
@@ -17,6 +18,6 @@ const pool = new Pool({
 //   }
 // })
 
-module.exports = {
-  pool
-}
+// module.exports = {
+//   pool
+// }
