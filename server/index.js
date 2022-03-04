@@ -8,6 +8,12 @@ app.use(express.static('client/dist'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}))
 
+//app.get(endpoint, (req, res) => {
+
+//})
+
+
+
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 })
