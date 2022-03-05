@@ -14,6 +14,21 @@ module.exports = {
 
   getProduct: (id, callback) => {
     let queryStr = 'SELECT * FROM products WHERE id=$1';
+    //$ indicates which element it's taking in the qryArgs array starting at 1
+    let queryArg = [id];
+    pool.query(queryStr, queryArg, (err, data) => {
+      if (err) {
+        console.log('Error executing query', err);
+        callback(err);
+      } else {
+        console.log('Products Query: ', data)
+        callback(null, data)
+      }
+    })
+  },
+
+  getStyles: (id, callback) => {
+    let queryStr = 'SELECT * FROM styles WHERE id=$1';
     //$ indicates which element it's taking in the array starting at 1
     let queryArg = [id];
     pool.query(queryStr, queryArg, (err, data) => {

@@ -1,0 +1,36 @@
+TEST #1: 03/04/22 Testing Query Time for PostgreSQL DB by selecting all from each table
+---
+product_info=# EXPLAIN SELECT * FROM products;
+ Seq Scan on products  (cost=0.00..48647.89 rows=1000189 width=277)
+                             |       |             |           |
+                     startUpCost  totalCost      outputRows   avgRowSize(bytes)
+(actual time=0.036..492.325 rows=1000011 loops=1)
+            |            |            |         |
+  startUpTime(ms)  totalTime(ms)   outputRows  scansMade
+
+Planning Time: 0.044 ms
+Execution Time: 578.940 ms
+---
+EXPLAIN ANALYZE SELECT * FROM styles;
+  Seq Scan on styles  (cost=0.00..45363.02 rows=1958102 width=23) (actual time=0.011..545.127 rows=1958102 loops=1)
+  Planning Time: 0.674 ms
+  Execution Time: 699.057 ms
+---
+EXPLAIN ANALYZE SELECT * FROM features;
+  Seq Scan on features  (cost=0.00..38632.79 rows=2219279 width=27) (actual time=0.177..457.337 rows=2219279 loops=1)
+  Planning Time: 1.169 ms
+  Execution Time: 632.788 ms
+---
+EXPLAIN ANALYZE SELECT * FROM skus;
+  Seq Scan on skus  (cost=0.00..175225.50 rows=11323550 width=15) (actual time=0.031..1587.115 rows=11323917 loops=1)
+  Planning Time: 0.037 ms
+  Execution Time: 2396.074 ms
+---
+EXPLAIN ANALYZE SELECT * FROM photos;
+  Seq Scan on photos  (cost=0.00..265384.52 rows=5655752 width=263) (actual time=1.894..1965.951 rows=5655463 loops=1)
+  Planning Time: 0.647 ms
+  Execution Time: 2553.530 ms
+---
+
+/////////////////////////////////////////////////////////////
+TEST #2: 03/--/22
