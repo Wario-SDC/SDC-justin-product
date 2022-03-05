@@ -1,0 +1,12 @@
+Currently I am working on creating a join query between two tables, I was researching how to wriet a join query, and wwas able to test this in the psql cli and then transfered the command over to my model query which is connected to my api get request which I am testing via postman
+
+NExt step I had to remove a specific table key from the features table and so I researched the problem and found this stack overflow link which helped me understand that I can specify the rows I want to include for a given table in my query.
+
+https://stackoverflow.com/questions/3492904/mysql-select-all-columns-from-one-table-and-some-from-another-table
+
+Next step I had to use data recieved form my db and create a nested array of objects to contain uniqiue data. Off the bat it seems that I will need to add some query logic and potentially create these objects manually before the data is sent back to the client
+
+So, I looked that startUpCost
+Then I needed to change my schema  rounda biut such that I created my foreign key connected after the csv files  ETL'ed data into my database becauseI read on a stackoverflow article it speeds up the COPY from method if foreign keys are added after, which makes sense
+
+After creating a new schema I needed to create a join query between three seperate tables namely my styles photos and skus table formatted appropriately, so I am currently investigatinghow to go about writing this complex query, more on that later

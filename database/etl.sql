@@ -9,3 +9,5 @@
 -- \COPY skus FROM ./myCSV/skus.csv DELIMITER ',' CSV HEADER;
 
 -- \COPY photos FROM ./myCSV/photos.csv DELIMITER ',' CSV HEADER;
+
+psql product_info -f databse/etl.sql ERROR
