@@ -1,6 +1,6 @@
 TEST #1: 03/04/22 Testing Query Time for PostgreSQL DB by selecting all from each table
 ---
-product_info=# EXPLAIN SELECT * FROM products;
+product_info=# EXPLAIN ANALYZE SELECT * FROM products;
  Seq Scan on products  (cost=0.00..48647.89 rows=1000189 width=277)
                              |       |             |           |
                      startUpCost  totalCost      outputRows   avgRowSize(bytes)
@@ -9,7 +9,7 @@ product_info=# EXPLAIN SELECT * FROM products;
   startUpTime(ms)  totalTime(ms)   outputRows  scansMade
 
 Planning Time: 0.044 ms
-Execution Time: 578.940 ms
+Execution Time: 578.940 ms / 602.414 ms
 ---
 EXPLAIN ANALYZE SELECT * FROM styles;
   Seq Scan on styles  (cost=0.00..45363.02 rows=1958102 width=23) (actual time=0.011..545.127 rows=1958102 loops=1)

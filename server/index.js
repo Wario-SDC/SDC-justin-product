@@ -20,7 +20,6 @@ app.get('/products/:id/styles', controller.getStylesReq);
 // EXPLAIN - runs estimated status
 // EXPLAIN ANALYZE - runs estimated and runs query
 
-
 app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 })
