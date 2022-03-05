@@ -57,29 +57,27 @@ module.exports = {
     //   'original_price', styles.original_price,
     //   'sale_price', styles.sale_price,
     //   'default?', styles.default_style
-    // )
-    // AS results FROM styles WHERE product_id=$1`
-
+    // ) AS results FROM styles WHERE product_id=$1`
     let queryStr =
     `SELECT styles.product_id,
-    (SELECT json_agg(
-      json_build_object(
-        'style_id', styles.id,
-        'name', styles.name,
-        'original_price', styles.original_price,
-        'sale_price', styles.sale_price,
-        'default?', styles.default_style,
-        'photos', (SELECT
-          json_agg(
-            json_build_object(
-              'thumbnail_url', photos.thumbnail_url,
-              'url', photos.url
-            )
-          ) AS photos FROM photos WHERE photos.style_id=styles.id)
-      )
-    ) AS results FROM styles WHERE product_id=$1)
+      (SELECT json_agg(
+        json_build_object(
+          'style_id', styles.id,
+          'name', styles.name,
+          'original_price', styles.original_price,
+          'sale_price', styles.sale_price,
+          'default?', styles.default_style,
+          'photos', (SELECT
+            json_agg(
+              json_build_object(
+                'thumbnail_url', photos.thumbnail_url,
+                'url', photos.url
+              )
+            ) AS photos FROM photos WHERE photos.style_id=styles.id
+          )
+        )
+      ) AS results FROM styles WHERE product_id=$1)
     FROM styles WHERE product_id=$1`;
-
     let queryArg = [id];
     pool.query(queryStr, queryArg, (err, data) => {
       if (err) {
@@ -92,7 +90,7 @@ module.exports = {
     })
   }
 
-}
+}//end of module exports
 
 // SELECT styles.product_id,
 //   (SELECT json_agg(
