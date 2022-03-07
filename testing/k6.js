@@ -5,8 +5,8 @@ import { Counter } from 'k6/metrics';
 let ErrorCount = new Counter("errors");
 
 export const options = {
-  vus: 10,
-  duration: '10s',
+  vus: 100,
+  duration: '15s',
   thresholds: {
     errors: ["count<10"]
   }

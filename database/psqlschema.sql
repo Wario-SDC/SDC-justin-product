@@ -1,4 +1,5 @@
 DROP DATABASE IF EXISTS product_information;
+
 CREATE DATABASE product_information;
 
 \c product_information;
