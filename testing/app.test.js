@@ -10,11 +10,11 @@ describe('Products', () => {
   describe('/products/:id', () => {
 
     //Upon test completion close the connection to the server itself
-    // afterAll((done) => {
-    //   // let server = app.listen(3000);
-    //   app.close() //app.close isnt a function
-    //   done()
-    // })
+    afterAll((done) => {
+      // let server = app.listen(3000);
+      app.close() //app.close isnt a function
+      done()
+    })
 
     test('should respond with 200 status code', async () => {
       //should recieve poroduct id information from the db

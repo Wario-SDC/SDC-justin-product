@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "jest --force-exit --runInBand",
-    "start": "nodemon server/index.js"
+    "start": "nodemon server/index.js",
+    "stress": "k6 run testing/k6.js"
   },
   "repository": {
     "type": "git",

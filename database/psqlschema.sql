@@ -57,7 +57,14 @@ UPDATE styles SET sale_price=0 WHERE sale_price IS NULL;
 --skus table
 \COPY skus FROM ./myCSV/skus.csv DELIMITER ',' CSV HEADER;
 
+--Add foriegn keys to tables after the data ETL'ed
 ALTER TABLE features ADD CONSTRAINT features_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(id);
 ALTER TABLE styles ADD CONSTRAINT styles_product_id_fkey FOREIGN KEY (product_id) REFERENCES products(id);
 ALTER TABLE photos ADD CONSTRAINT photos_style_id_fkey FOREIGN KEY (style_id) REFERENCES styles(id);
 ALTER TABLE skus ADD CONSTRAINT skus_style_id_fkey FOREIGN KEY (style_id) REFERENCES styles(id);
+
+--Add indexes on the foreign keys to optimize up query speed
+CREATE INDEX ON features (product_id);
+CREATE INDEX ON styles (product_id);
+CREATE INDEX ON photos (style_id);
+CREATE INDEX ON skus (style_id);
