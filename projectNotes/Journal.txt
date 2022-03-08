@@ -1,0 +1,57 @@
+SDC Engineering Journal
+_____________________________________________________________________________________________________________________
+
+Journal Entry #0: 02/28/22
+Today is the first workday of SDC and it is difficult to parse out exactly how to start this project. While starting this project I’d like to note how I feel about my own mental state in regards to starting something I am unfamiliar with. I feel optimistic and trust my abilities to learn new frameworks, and start a new project which I initially know nothing about. Moving forward I am to do thorough research on three main databases which I find will be viable options for this project. The three main databases include MySQL, MongoDB, and Postgres. For the remainder of the day I will spend my time researching these databases, and constructing a conceptual model for two of these databases via whiteboarding. Once there I will create relevant join tables as needed wherever possible and provide unique keys to optimize query speed.The main concern I have with my route is that the data is extremely nested, so I want to separate any and all data that doesn’t need to communicate with each other and form as many separations as possible to overall optimize query lookup speed.
+
+So, look at the data I will be working with and highlight specific properties that are shared among multiple parties(tables) then creatively think of unique keys that can narrow your search.
+
+_____________________________________________________________________________________________________________________
+
+Journal Entry #1: 03/01/22
+While researching which RDBMS to use for my System Design Capstone project I had the option of either going with MySQL or PostgresSQL. Both are open-source relational database management systems that are highly capable database tools. Given the parameters of the project my main goal is to modify my underperforming API focusing on optimizing performance and accommodating web traffic. One of my initial goals for the project was to take opportunities to learn new material. In this situation I felt I had an opportunity to learn a database management system that is foreign to me. The key advantage MySQL offers on average is greater speed optimization than PostgresSQL and requires less expertise on behalf of the developer. However, if there is a need for more complex queries or additional features that aren’t available in MySQL then looking at PostgresSQL is the better option, which I think I will grow to appreciate thinking long term. I decided to go with PostgresSQL as my primary RDBMS and for my secondary DBMS I decided to go with MongoDB. To my understanding it is more acceptable to include a list of IDs as a field in mongo then with SQL because Mongo is an all object-based document database.
+
+After I researched and picked my two databases I created a conceptual model in Miro for each database based on the data required for my application to run.
+Performance Notes
+Stress testing?
+_____________________________________________________________________________________________________________________
+
+Journal Entry #3: 03/04/22
+Currently I am working on creating a join query between two tables, I was researching how to write a join query, and was able to test this in the psql command line first, then transferred the command over to my model where I could query my database in response to a GET request, which is connected to my api get request which I am testing via postman
+
+Next step I had to remove a specific table column from the features table and, so I researched the problem and found this stack overflow link which helped me understand that I can specify the rows I want to include for a given table in my query by only including the columns I want.
+
+My next challenge was given my database schema and table management I needed to build out the response data for specific queries in the format my client is expecting. To do this I needed to form nested arrays of objects to contain unique data across multiple tables. Off the bat it seems that I will need to add query logic and potentially create these objects manually using helper functions before the data is sent back to the client
+
+_____________________________________________________________________________________________________________________
+
+Journal Entry #3: 03/04/22
+
+Another issue I was facing was when I needed to update my database there was an exceedingly high execution time for my application data to transfer and load. After a bit of research I had discovered that it would be more time efficient to first load the CSV files into the database, and once that is complete to set up my foreign keys as needed. The action I took was to implement my foreign key connections between my tables after the csv files  ETL'ed data into my database.
+
+_____________________________________________________________________________________________________________________
+
+Journal Entry #3: 03/05/22
+
+Working with K6 stress testing I am going to first install the program and do some research on how to use the program for my server. I am choosing K6 because this tool offers the same application for unit testing, like with jest/supertest, but for performance. The main reasons I chose K6 is that it is compatible with modern languages meaning that it models it's user interface off of commonly used  languages including javaScript, Jest etc... Another reason is that while K6 is primarily used for load testing you can also use it to validate API responses, so it's pretty flexible in how you use it and the program at large is very well documented.
+
+My first goal step in understanding how this stress testing framework works by answering more fundamental questions including: What is a stress test? What are virtual users? What types of tests are there and what are important metrics to keep note of.
+
+A virtual user is an entity that executes a test and simulates a response. So, if you have 10 virtual users then 10 people ar ehitting endpoints and running tests, and each user repeats the test as many tests as it can for as long as you specify (like 10 seconds). So, to test a specific application you can write a test such that do 1 then 2 then 3 etc... then n and that simulates one session. So, it's as if a user logged into your site and hit refresh a hundred times.
+To understand how many virtual users you use should be quantified by the amount of sessions you have in an hour multiplied by the average session duration divided by 3600, but for my purposes I will be testing 100 requests spanning 10 seconds hoping to get 90+ successful requests per second.
+There are a couple tests, but the first is the baseline test. In K6 there is a concept of stages where for the duration of a minute go from 1 virtual user to 100 virtual users, then for the duration of one minute stay at 100 virtual users, and then stage three decrement back down to 1 virtual user. So the baseline stages include: ramp-up, stay there, ramp-down enabling me to test low users, average users and peak users by manipulating the amount of virtual users.
+You can also have spike tests, which is pretty self explanatory
+When it comes to what metrics should I be looking for, measuring and using some of the  standard metrics include the number HTTP of requests, success rate, request execution time, how long a given request was blocked for, the DNS lookup time, how long the client waited for the first or last request to occur, and other metrics.
+For my purposes I mostly just want to know how long it took to perform a given query to my db client side, and I will also be forming some custom metrics tailored to my application specificity like for example keeping a counter of the errors that occur and checking each request for a 200 response status code.
+Other metrics include: trends, iterations, threshold, success rate, error rate, execution time and various others.
+Checks are like asserts but differ in that they done halt execution, it just stops and returns a bool
+Threholds are global pass/fail criteria that you can configure K6 to use, like the moment you hit 10% error rate then end the test suit (or you could not use this and let the test run all the way through and see at the end whether you pass or fail), but note a check will not fail a test.
+
+_____________________________________________________________________________________________________________________
+
+Journal Entry #3: 03/07/22
+Once I got my K6 stress test up and running at 100 virtual users spanning across 10 seconds I noticed considerable changes in my requests per second. On my first test I noticed that only 29 of my 100 virtual users managed to get a request through, and out of those only 2.5% of requests we’re successful meaning that my execution time was about 20 seconds per request. After running this a few times changing up my amount of virtual users, as well as the duration my VU’s can make requests my rps improved by a very slim margin. First jumping up to 3.6% and then 8.5%. Also, it is important to note that with checks I verified that every request had a response status of 200, and I also set up a threshold such that if the error percentage was above 10% then the test should auto fail right then and there. Luckily there were no errors in the requests, but the execution time was still not what it needed to be. At this point I realized my main issue was query speed, and so I started researching how to improve query speed on a postgresql database. A stack overflow article showed me that postgres does not automatically create indexes for foreign keys meaning the time complexity for a foegin key was linear. To verify this I use the explain analyze keywords to get more information about my query speeds via my command line. There I discovered that my query was sequentially scanning my tables, which is a linear time lookup, and I knew I could refactor this to constant time by adding secondary indices to my foreign keys. Indices are what makes databases fast because establishing an id identifies that particular data in a particular row of a particular table. So, I went back to the drawing board and used the create index on postgres keywords to add secondary indices to the four foerign keys in my database. After adding just one foreign key I was able to improve my request success rate from 9% to a whopping 54%. And once I had added a secondary to each foreign key I was able to optimize to 94% request success rate with 1500 successful requests in roughly a 16 second window. I wouldn’t have been able to check these speeds without K6, and looking back I am really glad I tracked my execution speeds along the way to get a good idea of how to optimize in the future. Now, on to unit testing!
+
+_____________________________________________________________________________________________________________________
+
+Journal Entry #3: 03/--/22
