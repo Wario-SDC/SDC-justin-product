@@ -1,0 +1,18 @@
+config:
+  target: "http.get(`http://localhost:3000/products)"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm Up"
+    - duration: 120
+      arrivalRate: 5
+      rampTo: 50
+      name: "Gradual Ramp Up"
+    - duration: 100
+      arrivalRate: 50
+      name: "Sustained Peak Traffic"
+  payload:
+    path: "/1"
+    # path: "/1/styles"
+
+

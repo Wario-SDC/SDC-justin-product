@@ -33,4 +33,26 @@ EXPLAIN ANALYZE SELECT * FROM photos;
 ---
 
 /////////////////////////////////////////////////////////////
-TEST #2: 03/--/22
+TEST #2: 03/08/22
+
+product_information=# EXPLAIN ANALYZE SELECT products.*, json_agg(
+  json_build_object(
+    'feature', features.feature,
+    'value', features.value
+  )
+) AS features FROM products JOIN features
+ON products.id=features.product_id WHERE products.id=1 GROUP BY products.id;
+
+ GroupAggregate  (cost=0.85..16.99 rows=1 width=313) (actual time=0.112..0.114 rows=1 loops=1)
+   Group Key: products.id
+   ->  Nested Loop  (cost=0.85..16.96 rows=3 width=300) (actual time=0.064..0.067 rows=2 loops=1)
+         ->  Index Scan using products_pkey on products  (cost=0.42..8.44 rows=1 width=281) (actual time=0.039..0.040 rows=1 loops=1)
+               Index Cond: (id = 1)
+         ->  Index Scan using features_product_id_idx on features  (cost=0.43..8.48 rows=3 width=23
+) (actual time=0.020..0.021 rows=2 loops=1)
+               Index Cond: (product_id = 1)
+ Planning Time: 1.023 ms
+ Execution Time: 0.413 ms
+
+ --
+
