@@ -23,7 +23,7 @@ app.listen(PORT, () => {
   console.log(`Server listening on port: ${PORT}`);
 })
 
-//Export the App to the testing Library
+//Export the App to the Jest Testing Library
 module.exports = {
   app
 }
