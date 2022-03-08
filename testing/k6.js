@@ -13,8 +13,24 @@ export const options = {
 };
 
 
+// export default function () {
+//   let res = http.get(`http://localhost:3000/products/1`);
+
+//   //Creating Error Check
+//   let success = check(res, {
+//     "status is 200": r => r.status === 200
+//   });
+//   if (!success) {
+//     // console.log('error');
+//     ErrorCount.add(1)
+//   }
+
+//   sleep(1);
+// }
+
+
 export default function () {
-  let res = http.get(`http://localhost:3000/products/1`);
+  let res = http.get(`http://localhost:3000/products/1/styles`);
 
   //Creating Error Check
   let success = check(res, {
