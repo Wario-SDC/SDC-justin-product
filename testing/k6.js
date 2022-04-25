@@ -16,16 +16,6 @@ export const options = {
 
 export default function () {
   http.get(`http://localhost:3000/products/1`); //197 //83 //184
-}
-  // http.get(`http://localhost:3000/products/1/styles`); //140 //179
+};
 
-  //Creating Error Check
-  // let success = check(res, {
-  //   "status is 200": r => r.status === 200
-  // });
-  // if (!success) {
-  //   // console.log('error');
-  //   ErrorCount.add(1)
-  // }
-
-  // sleep(1);
+//Aim to test the entirety of the database (not just product #1) because the system will cache that products information. K6 has a tool to randomize the number value with a range I can set

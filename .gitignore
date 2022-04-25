@@ -2,4 +2,8 @@ node_modules
 
 myCSV
 
+config.js
+
 newrelic.js
+
+newrelic_agent.log
