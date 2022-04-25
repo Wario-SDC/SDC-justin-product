@@ -7,3 +7,5 @@ config.js
 newrelic.js
 
 newrelic_agent.log
+
+jest.config.js
